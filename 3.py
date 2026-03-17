@@ -7,7 +7,7 @@ def get_filename():
         filename = input("Введите имя файла: ").strip()
         if filename.endswith(".csv") and os.path.isfile(filename):
             return filename
-        print("Файл не найден или не является .csv")
+        print("Введите существующий csv файл")
 
 
 def read_csv_file(file_path: str):
@@ -46,27 +46,28 @@ def build_context(years_data: dict):
     for year, towns in years_data.items():
         marathons = []
         for town, winners in towns.items():
-            male   = winners.get("male",   {})
+            male = winners.get("male", {})
             female = winners.get("female", {})
             marathons.append(
                 {
-                "town": town,
-                "male_name": male.get("Name_winner"),
-                "male_country": male.get("Country_winner"),
-                "male_time": male.get("Time"),
-                "female_name": female.get("Name_winner"),
-                "female_country": female.get("Country_winner"),
-                "female_time": female.get("Time"),
+                    "town": town,
+                    "male_name": male.get("Name_winner"),
+                    "male_country": male.get("Country_winner"),
+                    "male_time": male.get("Time"),
+                    "female_name": female.get("Name_winner"),
+                    "female_country": female.get("Country_winner"),
+                    "female_time": female.get("Time"),
                 }
             )
         pages.append(
             {
-                "year": year, 
+                "year": year,
                 "marathons": marathons
             }
         )
 
     return pages
+
 
 def generate_docx(pages: list, template_path: str, output_path: str):
     doc = DocxTemplate(template_path)
@@ -79,5 +80,3 @@ data = read_csv_file(filename)
 years_data = group_by_year(data)
 pages = build_context(years_data)
 generate_docx(pages, "template.docx", "result.docx")
-
-
