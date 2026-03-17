@@ -78,12 +78,6 @@ filename = get_filename()
 data = read_csv_file(filename)
 years_data = group_by_year(data)
 pages = build_context(years_data)
-pages = build_context(years_data)
-
-print(len(pages))
-for p in pages[:5]:
-    print(p["year"], len(p["marathons"]))
-
 generate_docx(pages, "template.docx", "result.docx")
 
 
