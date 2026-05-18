@@ -70,7 +70,7 @@ def build_context(years_data: dict):
 
 def generate_docx(pages: list, template_path: str, output_path: str):
     doc = DocxTemplate(template_path)
-    doc.render({"pages": pages, "pb": RichText("\f")})
+    doc.render({"pages": pages, "pb": "\f"})
     doc.save(output_path)
 
 
@@ -78,12 +78,6 @@ filename = get_filename()
 data = read_csv_file(filename)
 years_data = group_by_year(data)
 pages = build_context(years_data)
-pages = build_context(years_data)
-
-print(len(pages))
-for p in pages[:5]:
-    print(p["year"], len(p["marathons"]))
-
 generate_docx(pages, "template.docx", "result.docx")
 
 
